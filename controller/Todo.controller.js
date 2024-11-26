@@ -23,6 +23,8 @@ exports.getblog = asyncHandler(async (req, res) => {
     } else {
         console.log("if valuee not exists");
         const result = await Todo.find()
+        console.log(result);
+
         await redis.set('blog', JSON.stringify(result))
         await redis.expire('blog', 10)
         value = await redis.get('blog')
@@ -31,6 +33,6 @@ exports.getblog = asyncHandler(async (req, res) => {
     }
     const parsedata = JSON.parse(value)
     console.log("parsedata", parsedata);
-    res.status(200).json({ message: "todo fetch success" })
+    res.status(200).json({ message: "todo fetch success", parsedata })
 })
 
